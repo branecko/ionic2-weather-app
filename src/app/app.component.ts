@@ -4,9 +4,11 @@ import { StatusBar, Splashscreen } from 'ionic-native';
 
 import { TabsPage } from '../pages/tabs/tabs';
 
+import { WeatherService } from './services/weather.service';
 
 @Component({
-  templateUrl: 'app.html'
+  templateUrl: 'app.html',
+  providers: [WeatherService]
 })
 export class MyApp {
   rootPage = TabsPage;
