@@ -11,27 +11,39 @@ import { WeatherService } from '../../app/services/weather.service';
 })
 export class WeatherPage {
   weather: any;
-  city: String;
-  state: String;
+  zmw: any;
   searchStr: String;
   results: any;
 
   constructor(public navCtrl: NavController, private weatherService: WeatherService) {
-    this.city = 'Bratislava';
-    this.state = 'Slovakia';
   }
 
   ngOnInit() {
-    this.weatherService.getWeather(this.city, this.state)
-      .subscribe(weather => {
-        this.weather = weather.current_observation;
-      });
+    this.getDefaultCity();
+    this.getWeather();
+  }
+
+  getDefaultCity() {
+    this.zmw = '10001.11.99999';
   }
 
   getQuery() {
     this.weatherService.searchCities(this.searchStr)
       .subscribe(res => {
         this.results = res.RESULTS;
+      });
+  }
+
+  chooseLocation(location) {
+    this.results = [];
+    this.zmw = location.zmw;
+    this.getWeather();
+  }
+
+  getWeather() {
+    this.weatherService.getWeather(this.zmw)
+      .subscribe(weather => {
+        this.weather = weather.current_observation;
       });
   }
 
